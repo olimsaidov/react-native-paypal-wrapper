@@ -96,6 +96,7 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
   @ReactMethod
   public void initialize(String environment, String clientId) {
     config = new PayPalConfiguration().environment(environment).clientId(clientId);
+    config.acceptCreditCards(true);
 
     Intent intent = new Intent(reactContext, PayPalService.class);
     intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
@@ -114,7 +115,7 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
         new BigDecimal(price),
         currency,
         description,
-        PayPalPayment.PAYMENT_INTENT_SALE
+        PayPalPayment.PAYMENT_INTENT_AUTHORIZE
       );
 
     payment.enablePayPalShippingAddressesRetrieval(true);
